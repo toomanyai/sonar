@@ -1,0 +1,7 @@
+crawl4ai
+yfinance
+fastapi
+uvicorn[standard]
+openai
+pyyaml
+python-dotenv

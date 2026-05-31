@@ -1,0 +1,136 @@
+# Seed roster of stock KOLs to monitor.
+# handle: X username without @ (case-insensitive). region: cn | en.
+kols:
+  # --- 原有 ---
+  - handle: KotlinerBTC
+    display_name: KotlinerBTC
+    region: cn
+    note: 加密与个股期权波动率
+  - handle: unusual_whales
+    display_name: unusual whales
+    region: en
+    note: 期权异动与市场资金流
+
+  # --- 中文区 ---
+  - handle: xiaomustock
+    display_name: 川沐/Trumoo
+    region: cn
+    note: 半导体存储行业深度研究，AI期权实操
+  - handle: WallStreet0Name
+    display_name: 华尔街没有名字
+    region: cn
+    note: 实战金油等品种，基本面+技术结合
+  - handle: LucyBuilding
+    display_name: Lucy L.
+    region: cn
+    note: 普通人美股出海路径、工具框架和实盘笔记
+  - handle: fi56622380
+    display_name: fin
+    region: cn
+    note: AI主题内在逻辑与清晰框架分析
+  - handle: octopusycc
+    display_name: 大老师
+    region: cn
+    note: DRAM存储半导体专业分享
+  - handle: ShanghaoJin
+    display_name: Herman Jin
+    region: cn
+    note: 半导体领域机构级深度拆解
+  - handle: hanking66
+    display_name: 美股仙人
+    region: cn
+    note: 十年美股经验，buy the dip实战感悟
+  - handle: raycat2021
+    display_name: 徐老猫
+    region: cn
+    note: 数据+宏观+估值逻辑趋势分析
+  - handle: qinbafrank
+    display_name: qinbafrank
+    region: cn
+    note: AI前沿趋势与宏观流动性投资
+  - handle: henghaer123
+    display_name: 加州旅馆
+    region: cn
+    note: 半导体个股实战（如海力士、MLCC）
+  - handle: cyrilxuq
+    display_name: 徐冲浪
+    region: cn
+    note: 实战交易心得和财报可执行操作
+  - handle: bboczeng
+    display_name: 勃勃OC
+    region: cn
+    note: 理性基本面美股日报分析
+  - handle: Areskapitalon
+    display_name: Areskapitalon
+    region: cn
+    note: 地缘博弈与机构独立逆向视角
+  - handle: SV_Nomad
+    display_name: 硅谷散人
+    region: cn
+    note: AI产业趋势和宏观冷静观察
+  - handle: artinmemes
+    display_name: 美股OK哥
+    region: cn
+    note: 幽默短平快热点宏观点评
+  - handle: caizhenghai
+    display_name: forecho
+    region: cn
+    note: 程序员视角美股实操避坑导航
+  - handle: shufen46250836
+    display_name: shufen
+    region: cn
+    note: 美股Crypto个人成长陪伴分享
+  - handle: Jason23818126
+    display_name: 摸鱼局长
+    region: cn
+    note: 整合美股信息源和AI选股实战笔记
+  - handle: rtk17025
+    display_name: DD 滴滴
+    region: cn
+    note: 美股实操与机会分享
+  - handle: ZhanweiC
+    display_name: ZC
+    region: cn
+    note: 美股投资实战视角
+  - handle: tychozzz
+    display_name: Nico投资有道
+    region: cn
+    note: YouTube博主，美股比特币长期投资，高频分享
+
+  # --- 英文区 ---
+  - handle: aleabitoreddit
+    display_name: Serenity
+    region: en
+    note: 前Reddit WSB交易员，2年200倍，号称美股股神
+  - handle: jukan05
+    display_name: Jukan
+    region: en
+    note: Tech otaku风格，科技投资分享（DYODD）
+  - handle: degentradingLSD
+    display_name: degentrading
+    region: en
+    note: 前期权做市商，交易实战与市场洞察
+  - handle: leopoldasch
+    display_name: Leopold
+    region: en
+    note: 前OpenAI硅谷大佬，前沿科技Alpha基金
+  - handle: CathieDWood
+    display_name: Cathie Wood
+    region: en
+    note: ARK Invest创始人，科技成长股持仓更新
+  - handle: LizAnnSonders
+    display_name: Liz Ann Sonders
+    region: en
+    note: 高频更新，专注宏观分析图表
+  - handle: Remzztrades
+    display_name: Remz
+    region: en
+    note: 多品种交易风格，经常喊单
+  - handle: insane_analyst
+    display_name: Irrational Analysis
+    region: en
+    note: 投资理性分析视角
+  - handle: labubu_trader
+    display_name: labubu_trader
+    region: en
+    note: 特色高杠杆交易风格

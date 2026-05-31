@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.stockkol.scheduler</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/matongming/AI/stock-kol-monitor/backend/.venv/bin/python</string>
+        <string>/Users/matongming/AI/stock-kol-monitor/backend/scheduler.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/matongming/AI/stock-kol-monitor/backend</string>
+
+    <!-- Fire every 30 min; scheduler.py self-gates to 3h (market) / 6h (off-hours). -->
+    <key>StartInterval</key>
+    <integer>1800</integer>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/matongming/AI/stock-kol-monitor/data/logs/scheduler.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/matongming/AI/stock-kol-monitor/data/logs/scheduler.err.log</string>
+</dict>
+</plist>
