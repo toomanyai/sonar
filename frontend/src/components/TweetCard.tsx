@@ -7,6 +7,7 @@ import {
   Heart,
   BarChart3,
   Sparkles,
+  ExternalLink,
 } from "lucide-react";
 import type { Tweet } from "@/lib/api";
 import { cn, SENTIMENT_META, pctColor, fmtPct, fmtDateTime } from "@/lib/ui";
@@ -53,6 +54,19 @@ export default function TweetCard({
             )}
           </div>
         </div>
+        {tweet.url && (
+          <span
+            role="link"
+            title="在 X 查看原文"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(tweet.url, "_blank", "noopener,noreferrer");
+            }}
+            className="shrink-0 rounded-md p-1 text-slate-300 transition hover:bg-slate-100 hover:text-blue-600"
+          >
+            <ExternalLink className="h-4 w-4" />
+          </span>
+        )}
         <span
           className={cn(
             "shrink-0 rounded-md px-2 py-0.5 text-[12px] font-medium ring-1 ring-inset",

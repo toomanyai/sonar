@@ -68,6 +68,13 @@ CREATE TABLE IF NOT EXISTS tweet_signals (
 );
 CREATE INDEX IF NOT EXISTS idx_signals_ticker ON tweet_signals(ticker);
 
+-- Cached single-stock research report (JSON blob, TTL refreshed).
+CREATE TABLE IF NOT EXISTS ticker_report (
+    ticker     TEXT PRIMARY KEY,
+    data       TEXT,                              -- JSON
+    updated_at TEXT DEFAULT (datetime('now'))
+);
+
 -- Index constituents + weights (slickcharts) — "市场地位" / signal-quality layer.
 CREATE TABLE IF NOT EXISTS index_constituents (
     index_name TEXT NOT NULL,                      -- sp500 | nasdaq100 | dowjones

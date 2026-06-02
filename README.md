@@ -6,10 +6,44 @@ KOL's hit-rate, and serve it all to a Next.js dashboard.
 
 ## Stack
 - **Scraper**: crawl4ai (Playwright) with a logged-in managed-browser profile
-- **Analysis**: OpenAI-compatible LLM chain — NVIDIA v4-pro → DeepSeek → ds2api fallback
+- **Analysis**: OpenAI-compatible LLM chain (UI-configurable) — NVIDIA v4-flash → DeepSeek，可在设置页改 key/模型/回退链
 - **Prices**: yfinance (forward returns T+1/5/10/20)
 - **Storage**: SQLite (`data/app.db`)
 - **API**: FastAPI (`:8000`) · **Frontend**: Next.js + Tailwind (`:3000`)
+
+## 🚀 启动（日常）
+
+已经部署过、配好 key 和 X 登录后，每次启动只需开**两个终端**各跑一条：
+
+```bash
+# 终端 1 — 后端 API
+cd /Users/matongming/AI/stock-kol-monitor/backend
+.venv/bin/python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
+
+# 终端 2 — 前端界面
+cd /Users/matongming/AI/stock-kol-monitor/frontend
+npm run dev
+```
+
+然后浏览器打开 **http://localhost:3000**。
+
+停止：`lsof -ti:8000 | xargs kill`（后端）、`lsof -ti:3000 | xargs kill`（前端）。
+
+> 国内网络：后端/前端本身不需要代理；但 yfinance/联网搜索/抓取若不通，给当前终端 `export HTTPS_PROXY=http://127.0.0.1:2023 HTTP_PROXY=http://127.0.0.1:2023` 再启动。
+
+可选——让数据自动持续更新（盘中 3h / 盘外 6h，详见「定时抓取」）：
+```bash
+cp deploy/com.stockkol.scheduler.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/com.stockkol.scheduler.plist
+```
+
+## 首次部署（只做一次）
+
+1. **装依赖**（见下「Backend setup」+ `cd frontend && npm install`）
+2. **配 key**：`cp backend/.env.example backend/.env` 填至少一个 LLM key + Finnhub key；或启动后在网页右上角 **⚙ 设置页** 里配
+3. **登录 X**：`cd backend && .venv/bin/python -m scraper.x_profile`（浏览器手动登录一次）
+4. **跑一遍出数据**：`.venv/bin/python pipeline.py`（抓 `kols.yaml` 里所有 KOL → 分析 → 入库）
+5. **启动**（见上「🚀 启动」）
 
 ## Backend setup
 
@@ -62,7 +96,7 @@ backend/
   analysis/prices.py     yfinance forward returns -> hit-rate
   storage/schema.sql     SQLite schema   storage/db.py  helpers
   pipeline.py            orchestrator     api/main.py    FastAPI
-frontend/                Next.js dashboard (5 screens)
+frontend/                Next.js dashboard (总览/推文/股票/提及表现/战绩/供应链/多源/行业/分析/关注我/设置)
 data/app.db              SQLite database
 ```
 

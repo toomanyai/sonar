@@ -128,6 +128,24 @@ async def run_scrape(limit: int = 40) -> None:
         except Exception as e:  # noqa: BLE001
             print(f"  ! index refresh failed: {e}")
 
+    # Pre-warm research reports for the most-mentioned tickers so user clicks are
+    # instant (get_report skips any still-fresh within its TTL).
+    try:
+        from analysis.report import get_report
+        top = conn.execute(
+            """SELECT ticker, COUNT(DISTINCT tweet_id) n FROM tweet_tickers
+               GROUP BY ticker HAVING n >= 2 ORDER BY n DESC LIMIT 8""").fetchall()
+        warmed = 0
+        for r in top:
+            try:
+                get_report(conn, r["ticker"])
+                warmed += 1
+            except Exception:  # noqa: BLE001
+                pass
+        print(f"  pre-warmed {warmed} research reports")
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! report pre-warm failed: {e}")
+
 
 async def main() -> None:
     ap = argparse.ArgumentParser()

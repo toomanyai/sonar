@@ -75,9 +75,12 @@ def _tweet_obj(c: sqlite3.Connection, row: sqlite3.Row | dict) -> dict:
     t = dict(row)
     tks = _tickers_for(c, t["id"])
     topics = sorted({tk["industry_chain"] for tk in tks if tk.get("industry_chain")})
+    handle = (t.get("handle") or "").lstrip("@")
+    url = t.get("url") or (f"https://x.com/{handle}/status/{t['id']}" if handle else "")
     return {
         "id": t["id"],
         "kol": _kol_obj(t),
+        "url": url,
         "text": t.get("text", ""),
         "createdAt": t.get("created_at") or t.get("scraped_at"),
         "sentiment": t.get("view") or "neutral",
@@ -486,6 +489,13 @@ def stock_detail(ticker: str):
         "topKols": topKols, "representativeTweets": rep,
         "aiLogic": {"consensus": "", "drivers": [], "risks": []},  # not generated in v1
     }
+
+
+@app.get("/stocks/{ticker}/report")
+def stock_report(ticker: str):
+    """One-page research report: 财务/市场表现/技术面/AI观点/目标价/机构/新闻(免费数据)。"""
+    from analysis.report import get_report
+    return get_report(_conn(), ticker)
 
 
 @app.get("/stocks/{ticker}/timeline")

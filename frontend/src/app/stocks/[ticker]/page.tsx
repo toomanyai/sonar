@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -80,6 +80,13 @@ export default function StockDetailPage() {
             )}
           </span>
         )}
+        <Link
+          href={`/stocks/${ticker}/report`}
+          className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-2 text-[13px] font-medium text-white hover:bg-blue-700"
+        >
+          <FileText className="h-4 w-4" />
+          生成个股研报
+        </Link>
       </div>
 
       {/* Key metrics */}

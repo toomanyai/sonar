@@ -61,6 +61,8 @@ export interface Kol {
 export interface Tweet {
   id: string;
   kol: Kol;
+  /** 原推文 X 链接 */
+  url?: string;
   text: string;
   createdAt: string; // ISO
   sentiment: Sentiment;
@@ -532,6 +534,69 @@ export function getStockTimeline(ticker: string): Promise<StockTimeline> {
   return withFallback(`/stocks/${ticker}/timeline`, MOCK_TIMELINE);
 }
 
+/* 个股研报（免费数据版，仿一页式研报） */
+export interface StockReport {
+  ticker: string;
+  company: string;
+  sector: string;
+  updated: string;
+  price: {
+    current: number | null;
+    changePct: number | null;
+    fiftyTwoWeekHigh: number | null;
+    fiftyTwoWeekLow: number | null;
+    marketCap: number | null;
+    volume: number | null;
+  };
+  targets: {
+    low: number | null;
+    mean: number | null;
+    high: number | null;
+    current: number | null;
+    numAnalysts: number | null;
+    recommendation: string | null;
+  };
+  ratingZones: {
+    buyBelow?: number;
+    watch?: [number, number];
+    riskAbove?: number;
+    position?: string;
+  };
+  metrics: { label: string; value: number | null }[];
+  scores: {
+    technical: { score: number; trend?: number; mom3m?: number; volAnn?: number };
+    fundamental: {
+      score: number;
+      grossMargin?: number;
+      netMargin?: number;
+      roe?: number;
+      revGrowth?: number;
+      fwdPE?: number;
+    };
+  };
+  financials: { item: string; value: number | null; yoy?: number | null; unit?: string }[];
+  performance: {
+    d1?: number | null;
+    d5?: number | null;
+    m1?: number | null;
+    m3?: number | null;
+    ytd?: number | null;
+    y1?: number | null;
+  };
+  institutions: {
+    pctInstitutions: number | null;
+    topHolders: { holder: string; pct: number }[];
+  };
+  news: { datetime: string; headline: string; source: string; url: string }[];
+  kol: { mentions: number; bullish: number; bearish: number };
+  aiView: { core: string; bull: string[]; risk: string[]; catalyst: string[]; error?: string };
+}
+
+/** GET /stocks/{ticker}/report — 一页式个股研报（首次生成约 30-40 秒，之后缓存秒回） */
+export function getStockReport(ticker: string): Promise<StockReport> {
+  return withFallback(`/stocks/${ticker}/report`, MOCK_STOCK_REPORT);
+}
+
 export interface StanceChange {
   handle: string;
   name: string;
@@ -655,6 +720,21 @@ const MOCK_PERFORMANCE: PerformanceData = {
   byView: [],
   byChain: [],
   note: "样本随交易日累积。",
+};
+
+const MOCK_STOCK_REPORT: StockReport = {
+  ticker: "", company: "", sector: "", updated: "",
+  price: { current: null, changePct: null, fiftyTwoWeekHigh: null, fiftyTwoWeekLow: null, marketCap: null, volume: null },
+  targets: { low: null, mean: null, high: null, current: null, numAnalysts: null, recommendation: null },
+  ratingZones: {},
+  metrics: [],
+  scores: { technical: { score: 0 }, fundamental: { score: 0 } },
+  financials: [],
+  performance: {},
+  institutions: { pctInstitutions: null, topHolders: [] },
+  news: [],
+  kol: { mentions: 0, bullish: 0, bearish: 0 },
+  aiView: { core: "", bull: [], risk: [], catalyst: [] },
 };
 
 const MOCK_SUPPLY_CHAIN: SupplyChainData = {
